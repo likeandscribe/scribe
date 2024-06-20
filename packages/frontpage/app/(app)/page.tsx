@@ -1,27 +1,8 @@
-import { getFrontpagePosts } from "@/lib/data";
-import { PostCard } from "./_components/post-card";
-import { unstable_noStore } from "next/cache";
+import { Home } from "./_components/home-page";
 
-export default async function Home() {
-  unstable_noStore();
-  const posts = await getFrontpagePosts();
-  return (
-    <div className="space-y-6">
-      {posts.map((post) => (
-        <PostCard
-          key={post.id}
-          author={post.authorDid}
-          createdAt={post.createdAt}
-          id={post.id}
-          title={post.title}
-          url={post.url}
-          votes={post.voteCount}
-          commentCount={post.commentCount}
-          cid={post.cid}
-          rkey={post.rkey}
-          isUpvoted={post.userHasVoted}
-        />
-      ))}
-    </div>
-  );
+export const revalidate = 900; // 15 minutes
+export const dynamic = "force-static";
+
+export default function HomePage() {
+  return <Home />;
 }
