@@ -3,7 +3,7 @@ import { getUserPosts } from "@/lib/data/db/post";
 import { unstable_noStore } from "next/cache";
 import { notFound } from "next/navigation";
 import { PostCard } from "../../_components/post-card";
-import { UserAvatar } from "@/lib/components/avatar";
+import { UserAvatar } from "@/lib/components/user-avatar";
 import {
   Tabs,
   TabsList,
@@ -31,7 +31,7 @@ export default async function Profile({ params }: { params: Params }) {
     ...userPosts.map((p) => ({ ...p, type: "post" as const })),
     ...userComments.map((p) => ({ ...p, type: "comment" as const })),
   ].sort((a, b) => {
-    return b.createdAt.getTime() - a.createdAt.getTime();
+    return a.createdAt.getTime() - b.createdAt.getTime();
   });
 
   const bskyProfile = await getBlueskyProfile(did);

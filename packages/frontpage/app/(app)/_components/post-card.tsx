@@ -6,6 +6,7 @@ import { TimeAgo } from "@/lib/components/time-ago";
 import { VoteButton } from "./vote-button";
 import { PostCollection } from "@/lib/data/atproto/post";
 import { DID } from "@/lib/data/atproto/did";
+import { UserHoverCard } from "@/lib/components/user-hover-card";
 
 type PostProps = {
   id: number;
@@ -87,9 +88,11 @@ export async function PostCard({
           <div className="flex gap-2 flex-wrap md:flex-nowrap">
             <div className="flex gap-2">
               <span aria-hidden>•</span>
-              <Link href={`/profile/${handle}`} className="hover:underline">
-                by {handle}
-              </Link>
+              <UserHoverCard did={author} asChild>
+                <Link href={`/profile/${handle}`} className="hover:underline">
+                  by {handle}
+                </Link>
+              </UserHoverCard>
             </div>
           </div>
           <div className="w-full flex items-center justify-between gap-2 md:gap-4 sm:w-auto">

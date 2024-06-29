@@ -5,9 +5,10 @@ import {
 } from "./comment-client";
 import { getCommentsForPost } from "@/lib/data/db/comment";
 import { TimeAgo } from "@/lib/components/time-ago";
-import { UserAvatar } from "@/lib/components/avatar";
+import { UserAvatar } from "@/lib/components/user-avatar";
 import Link from "next/link";
 import { getDidFromHandleOrDid } from "@/lib/data/atproto/did";
+import { UserHoverCard } from "@/lib/components/user-hover-card";
 
 type ServerCommentProps = Omit<
   CommentProps,
@@ -62,10 +63,15 @@ export async function Comment({
         }
       >
         <div className="flex items-center gap-2">
-          <Link href={`/profile/${handle}`} className="flex items-center gap-2">
-            <UserAvatar did={authorDid} />
-            <div className="font-medium">{handle}</div>
-          </Link>
+          <UserHoverCard asChild did={authorDid}>
+            <Link
+              href={`/profile/${handle}`}
+              className="flex items-center gap-2"
+            >
+              <UserAvatar did={authorDid} />
+              <div className="font-medium">{handle}</div>
+            </Link>
+          </UserHoverCard>
           <Link
             href={`/post/${postAuthorParam}/${props.postRkey}/${handle}/${props.rkey}`}
             className="text-gray-500 text-xs dark:text-gray-400 hover:underline"
